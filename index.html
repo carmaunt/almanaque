@@ -1,0 +1,76 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Tech App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="card">
+      <header class="brand">
+        <div class="brand-icon">T</div>
+        <div class="brand-text">
+          <span>Área segura</span>
+          <strong>Tech Platform</strong>
+        </div>
+      </header>
+
+      <main>
+        <h1>Entrar</h1>
+        <p class="subtitle">Acesse o painel da sua plataforma tecnológica com segurança.</p>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="email">Login</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📧</span>
+              <input
+                id="email"
+                type="email"
+                placeholder="seuemail@dominio.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <p class="hint">Use o e-mail cadastrado na plataforma.</p>
+          </div>
+
+          <div class="field">
+            <label for="password">Senha</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                minlength="6"
+                required
+              />
+            </div>
+            <p class="hint">Mantenha sua senha em segurança. Não compartilhe com ninguém.</p>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="loginButton">Entrar</button>
+            <div id="feedback" class="error-message"></div>
+            <div id="success" class="success-message"></div>
+          </div>
+        </form>
+
+        <p class="footer">
+          Ambiente de autenticação <strong>seguro</strong> com <strong>Firebase</strong>.
+        </p>
+      </main>
+    </div>
+  </div>
+
+  <!-- Script principal em módulo -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

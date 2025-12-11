@@ -1,0 +1,101 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Tech Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Estilos globais da página (opcional) -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Estilos específicos do dashboard -->
+  <link rel="stylesheet" href="dashboard-style.css" />
+</head>
+<body>
+  <div class="dashboard-root">
+    <!-- Header com brand + menu hamburger -->
+    <header class="dash-header">
+      <div class="dash-brand">
+        <div class="dash-brand-icon">T</div>
+        <div class="dash-brand-text">
+          <span>Painel</span>
+          <strong>Tech Platform</strong>
+        </div>
+      </div>
+
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </header>
+
+    <!-- Overlay para fechar o menu em mobile -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="dash-layout">
+      <!-- Menu lateral (hamburger) -->
+      <nav class="side-nav" id="sideNav">
+        <div class="side-nav-title">Menu</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-item-btn active" data-section="home">
+              <span class="icon">🏠</span>
+              <span class="label">Home</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-section="adicionar">
+              <span class="icon">➕</span>
+              <span class="label">Adicionar</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-section="consultar">
+              <span class="icon">🔍</span>
+              <span class="label">Consultar</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-section="reconhecimento">
+              <span class="icon">👁️</span>
+              <span class="label">Reconhecimento Facial</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Conteúdo principal -->
+      <main class="dash-main">
+        <section class="dash-card" id="dashContent" style="padding-left: 9px; padding-right: 9px;">
+          <div class="dash-card-header">
+            <h1 id="dashTitle">Home</h1>
+            <p id="dashSubtitle">
+              Bem-vindo ao painel tecnológico. Use o menu para navegar entre as funcionalidades.
+            </p>
+          </div>
+
+          <div class="dash-highlight-box" id="dashHighlight">
+            <div class="dash-highlight-title">
+              <span class="icon">💡</span>
+              <span>Dica rápida</span>
+            </div>
+            <p>
+              Comece pela opção <strong>Adicionar</strong> para registrar novos itens e depois use
+              <strong>Consultar</strong> para acompanhar o que já foi cadastrado.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <!-- Scripts das seções (definem as funções renderXxxSection no escopo global) -->
+  <script src="dashboard-home.js"></script>
+  <script src="dashboard-adicionar.js"></script>
+  <script src="dashboard-consultar.js"></script>
+  <script src="dashboard-reconhecimento.js"></script>
+
+  <!-- Script específico do dashboard -->
+  <script src="dashboard-script.js"></script>
+</body>
+</html>

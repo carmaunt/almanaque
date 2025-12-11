@@ -1,0 +1,546 @@
+<!-- resultado.html (photo-card e info-card alinhadas em modo mobile) -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resultado da consulta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #020617, #020617 40%, #000 80%);
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 24px;
+      }
+      .container {
+        width: 100%;
+        max-width: 960px;
+        background: rgba(15, 23, 42, 0.95);
+        border-radius: 18px;
+        border: 1px solid #1e293b;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.8);
+        padding: 20px 22px 24px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .title {
+        font-size: 22px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .subtitle {
+        font-size: 13px;
+        opacity: 0.8;
+      }
+      .back-link {
+        font-size: 14px;
+        color: #60a5fa;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 10px;
+      }
+      .photo-card {
+        flex: 0 0 260px;
+        max-width: 280px;
+        background: #020617;
+        border-radius: 12px;
+        border: 1px solid #1e293b;
+        padding: 10px;
+      }
+      .photo-wrapper {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #1f2937;
+        background: #020617;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .photo-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .photo-caption {
+        margin-top: 8px;
+        font-size: 13px;
+        opacity: 0.8;
+        text-align: center;
+      }
+      .status-inline {
+        margin-top: 6px;
+        font-size: 12px;
+        opacity: 0.9;
+        text-align: center;
+      }
+      .status-inline.error {
+        color: #f97373;
+      }
+      /* botão "Add foto" centralizado abaixo da foto */
+      .add-photo-fab {
+        margin: 10px auto 0;
+        display: block;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(22, 163, 74, 0.6);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .add-photo-fab:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(22, 163, 74, 0.8);
+      }
+      .add-photo-fab:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(22, 163, 74, 0.7);
+      }
+
+      .info-card {
+        flex: 1 1 280px;
+        min-width: 0;
+        background: #020617;
+        border-radius: 12px;
+        border: 1px solid #1e293b;
+        padding: 14px 16px;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px 18px;
+      }
+      .info-item-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #9ca3af;
+        margin-bottom: 2px;
+      }
+      .info-item-value {
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .block {
+        margin-top: 18px;
+      }
+      .block-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .historico-box {
+        font-size: 14px;
+        line-height: 1.4;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #1f2937;
+        background: #020617;
+        max-height: 220px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+      }
+      .hint {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 4px;
+      }
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        background: #020617;
+        color: #e5e7eb;
+        font-size: 14px;
+        resize: vertical;
+        min-height: 80px;
+      }
+      textarea:focus {
+        outline: 1px solid #2563eb;
+        border-color: #2563eb;
+      }
+      .actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn-primary {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        background: linear-gradient(90deg, #22c55e, #16a34a);
+        color: white;
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+      .status {
+        font-size: 13px;
+        opacity: 0.85;
+      }
+      .status.error {
+        color: #f97373;
+      }
+
+      /* AJUSTES PARA MOBILE: alinhar photo-card e info-card */
+      @media (max-width: 640px) {
+        .container {
+          padding: 16px;
+        }
+        .title {
+          font-size: 18px;
+        }
+        .content {
+          flex-direction: column;
+        }
+        .photo-card,
+        .info-card {
+          flex: 1 1 100%;
+          max-width: 100%;
+        }
+        .content {
+          flex-direction: column;     /* photo-card em cima, info-card embaixo */
+          align-items: center;        /* centraliza o bloco da foto */
+        }
+
+        .photo-card {
+          flex: 0 0 auto;             /* não estica junto com a largura da tela */
+          width: 260px;               /* mesmo tamanho de antes */
+          max-width: 260px;           /* trava o máximo pra não crescer */
+        }
+
+        .info-card {
+          flex: 1 1 100%;             /* info-card ocupa toda a largura disponível */
+          width: 100%;
+        }
+        .actions {
+          justify-content: center;  /* centraliza o botão */
+          flex-wrap: wrap;          /* evita quebra feia se o texto do status aparecer */
+        }
+
+        #btn-salvar-historico {
+          width: auto;              /* mantém o botão no tamanho natural */
+          margin: 0 auto;           /* garante centralização */
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div>
+          <div class="title">
+            <span>📄</span>
+            <span>Detalhes do registro</span>
+          </div>
+          <div class="subtitle" id="subtitle">
+            Carregando informações do criminoso...
+          </div>
+        </div>
+        <a href="dashboard.html" class="back-link">⟵ Voltar</a>
+      </div>
+
+      <div id="erro-global" class="status error" style="display:none; margin-bottom:10px;"></div>
+
+      <div class="content" id="content" style="display:none;">
+        <div class="photo-card">
+          <div class="photo-wrapper">
+            <img id="foto-criminoso" src="" alt="Foto do criminoso" />
+          </div>
+          <div class="photo-caption" id="foto-caption">
+            Foto cadastrada.
+          </div>
+
+          <!-- input escondido que abre a galeria / explorador de arquivos -->
+          <input
+            type="file"
+            id="nova-foto"
+            accept="image/*"
+            style="display:none"
+          />
+
+          <!-- botão centralizado "Add foto" -->
+          <button
+            type="button"
+            id="btn-add-foto"
+            class="add-photo-fab"
+            title="Adicionar nova foto"
+          >
+            Add foto
+          </button>
+
+          <div id="status-foto" class="status-inline"></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-grid">
+            <div>
+              <div class="info-item-label">Nome</div>
+              <div class="info-item-value" id="info-nome">-</div>
+            </div>
+            <div>
+              <div class="info-item-label">Alcunha</div>
+              <div class="info-item-value" id="info-alcunha">-</div>
+            </div>
+            <div>
+              <div class="info-item-label">Facção</div>
+              <div class="info-item-value" id="info-faccao">-</div>
+            </div>
+            <div>
+              <div class="info-item-label">Localidade</div>
+              <div class="info-item-value" id="info-localidade">-</div>
+            </div>
+            <div>
+              <div class="info-item-label">ID registro</div>
+              <div class="info-item-value" id="info-id">-</div>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Histórico registrado</div>
+            <div class="historico-box" id="historico-atual">
+              -
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block-title">Adicionar informações ao histórico</div>
+            <textarea
+              id="novo-historico"
+              placeholder="Digite novas informações, ocorrências, mandados, detalhes de investigação etc."
+            ></textarea>
+            <div class="hint">
+              O texto digitado aqui será anexado ao histórico existente desse criminoso.
+            </div>
+            <div class="actions">
+              <button id="btn-salvar-historico" class="btn-primary">
+                Salvar no histórico
+              </button>
+              <span id="status-historico" class="status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:3000/api/criminosos";
+
+      function getCriminosoIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("id");
+      }
+
+      async function carregarCriminoso(id) {
+        const erroGlobal = document.getElementById("erro-global");
+        const content = document.getElementById("content");
+        const subtitle = document.getElementById("subtitle");
+
+        try {
+          const resp = await fetch(`${API_BASE}/${encodeURIComponent(id)}`);
+          if (!resp.ok) {
+            throw new Error(`HTTP ${resp.status}`);
+          }
+          const c = await resp.json();
+
+          document.getElementById("info-nome").textContent = c.nome || "-";
+          document.getElementById("info-alcunha").textContent =
+            c.alcunha || "-";
+          document.getElementById("info-faccao").textContent =
+            c.faccao || "-";
+          document.getElementById("info-localidade").textContent =
+            c.localidade || "-";
+          document.getElementById("info-id").textContent = c.id || "-";
+          document.getElementById("historico-atual").textContent =
+            c.historico && c.historico.trim()
+              ? c.historico
+              : "Nenhum histórico registrado.";
+
+          const imgEl = document.getElementById("foto-criminoso");
+          const AVATAR_PADRAO = "assets/avatar-default.png";
+
+          if (c.imagem_url) {
+            imgEl.src = c.imagem_url;
+            document.getElementById("foto-caption").textContent =
+              "Foto cadastrada.";
+          } else {
+            imgEl.src = AVATAR_PADRAO;
+            imgEl.style.opacity = 1;
+            document.getElementById("foto-caption").textContent =
+              "Sem foto cadastrada. Exibindo avatar padrão.";
+          }
+
+          subtitle.textContent = "Visualizando registro detalhado.";
+          erroGlobal.style.display = "none";
+          content.style.display = "flex";
+        } catch (e) {
+          console.error(e);
+          erroGlobal.textContent =
+            "Não foi possível carregar os dados desse registro. Verifique se o ID é válido e se o backend está em execução.";
+          erroGlobal.style.display = "block";
+          subtitle.textContent = "Erro ao carregar registro.";
+          content.style.display = "none";
+        }
+      }
+
+      async function enviarFoto(id) {
+        const arquivo = document.getElementById("nova-foto").files[0];
+        const status = document.getElementById("status-foto");
+
+        status.classList.remove("error");
+        status.textContent = "";
+
+        if (!arquivo) {
+          status.textContent = "Nenhuma foto selecionada.";
+          status.classList.add("error");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("foto", arquivo);
+
+        status.textContent = "Enviando foto...";
+
+        try {
+          const resp = await fetch(`${API_BASE}/${id}/fotos`, {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!resp.ok) {
+            const msg = await resp.text().catch(() => "");
+            throw new Error(msg || `HTTP ${resp.status}`);
+          }
+
+          await resp.json();
+          status.textContent = "Foto enviada com sucesso!";
+        } catch (e) {
+          console.error(e);
+          status.textContent =
+            "Erro ao enviar foto. Verifique a rota /fotos no backend.";
+          status.classList.add("error");
+        }
+      }
+
+      async function salvarHistorico(id) {
+        const textarea = document.getElementById("novo-historico");
+        const statusEl = document.getElementById("status-historico");
+        const btn = document.getElementById("btn-salvar-historico");
+        const texto = textarea.value.trim();
+
+        statusEl.classList.remove("error");
+        statusEl.textContent = "";
+
+        if (!texto) {
+          statusEl.textContent = "Digite algo antes de salvar.";
+          statusEl.classList.add("error");
+          return;
+        }
+
+        btn.disabled = true;
+        statusEl.textContent = "Salvando...";
+
+        try {
+          const resp = await fetch(
+            `${API_BASE}/${encodeURIComponent(id)}/historico`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ texto }),
+            }
+          );
+
+          if (!resp.ok) {
+            const errText = await resp.text().catch(() => "");
+            throw new Error(errText || `HTTP ${resp.status}`);
+          }
+
+          const atualizado = await resp.json();
+
+          document.getElementById("historico-atual").textContent =
+            atualizado.historico ||
+            "Nenhum histórico registrado (campo veio vazio).";
+
+          textarea.value = "";
+          statusEl.textContent = "Histórico atualizado com sucesso.";
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent =
+            "Erro ao salvar histórico. Verifique o backend.";
+          statusEl.classList.add("error");
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      (function init() {
+        const id = getCriminosoIdFromURL();
+        if (!id) {
+          const erroGlobal = document.getElementById("erro-global");
+          document.getElementById("subtitle").textContent =
+            "ID não informado na URL.";
+          erroGlobal.textContent =
+            "Nenhum ID de criminoso foi informado. Abra esta página a partir de um resultado de consulta.";
+          erroGlobal.style.display = "block";
+          return;
+        }
+
+        carregarCriminoso(id);
+
+        const btnSalvar = document.getElementById("btn-salvar-historico");
+        btnSalvar.addEventListener("click", () => salvarHistorico(id));
+
+        const inputFoto = document.getElementById("nova-foto");
+        const btnAddFoto = document.getElementById("btn-add-foto");
+
+        btnAddFoto.addEventListener("click", () => {
+          inputFoto.click();
+        });
+
+        inputFoto.addEventListener("change", () => {
+          if (inputFoto.files && inputFoto.files[0]) {
+            enviarFoto(id);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
