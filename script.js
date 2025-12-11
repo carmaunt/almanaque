@@ -38,7 +38,7 @@ loginForm.addEventListener("submit", async (event) => {
     // Exemplo de redirecionamento após login
     // Substitua '/dashboard.html' pela rota real da sua aplicação
     setTimeout(() => {
-      window.location.href = "/dashboard.html";
+      window.location.href = "dashboard.html";
     }, 1000);
   } catch (error) {
     console.error(error);
